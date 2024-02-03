@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket reservations for a movie app</title>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" rel="stylesheet">
+    <script src="/movies.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="/movies-app" class="nav-link">Movies</a>
+            </li>
+            <li class="nav-item">
+                <a href="/reservations-app" class="nav-link">All reservations</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <br/>
+    <!--    butonul pt a adauga o tara => deschide acel modal-->
+    <button class="btn btn-primary" data-bs-target="#add-edit-movie"
+            data-bs-toggle="modal" id="add-movie-button" type="button">Add movie
+    </button>
+    <br/>
+
+    <table id="movies-table" class="table table-bordered table-hover">
+        <thead> <!-- table row,this is the header -->
+        <td>Movie name</td>
+        <td>Cinema name</td>
+        <td>Number of tickets</td>
+        <td>Price</td>
+        </thead>
+        <tr data-th-each="movie:${movies}">
+            <td data-th-text="${movie.name}"></td>
+            <td data-th-text="${movie.cinemaName}"></td>
+            <td data-th-text="${movie.noOfTickets}"></td>
+            <td data-th-text="${movie.price}"></td>
+            <td data-th-id="${movie.movieId}">
+                <button class="btn btn-primary" data-bs-target="#add-reservation"
+                        data-bs-toggle="modal" id="add-reservation-button" type="button">Add reservation
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <a href="/reservations-app" class="btn btn-success">Back to reservations</a>
+</div>
+
+
+<!--dialogul modal in care introducem datele. Folosit doar pt add momentan, va fi refolosit pt Update (PUT)-->
+<div class="modal" id="add-edit-movie">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal header -->
+            <div class="modal-header">
+                <!--                textul + butonul de X-->
+                <h4 class="modal-title">Movie</h4>
+                <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!--                toate cele 5 fielduri ce incerc sa le adaug-->
+                <input class="form-control form-control-lg m-2" id="modal-name" placeholder="Name" type="text"/>
+                <input class="form-control form-control-lg m-2" id="modal-cinema-name" placeholder="Cinema name" type="text"/>
+                <input class="form-control form-control-lg m-2" id="modal-number-of-tickets" placeholder="Number of tickets"
+                       type="text"/>
+                <input class="form-control form-control-lg m-2" id="modal-price" placeholder="Price" type="text"/>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--                butonul de Save, pe care cand dam click dorim sa trimitem request catre server (POST)-->
+                <button class="btn btn-primary" data-bs-dismiss="modal" id="add-button-modal" type="button">Save
+                </button>
+                <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--dialogul modal in care introducem datele. Folosit doar pt add momentan, va fi refolosit pt Update (PUT)-->
+<div class="modal" id="add-reservation">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal header -->
+            <div class="modal-header">
+                <!--                textul + butonul de X-->
+                <h4 class="modal-title">Reservation</h4>
+                <button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!--                toate cele 5 fielduri ce incerc sa le adaug-->
+                <input class="form-control form-control-lg m-2" id="modal-reservation-person" placeholder="Your name" type="text"/>
+                <input class="form-control form-control-lg m-2" id="modal-reservation-number-of-tickets" placeholder="Number of tickets"
+                       type="text"/>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--                butonul de Save, pe care cand dam click dorim sa trimitem request catre server (POST)-->
+                <button class="btn btn-primary" data-bs-dismiss="modal" id="add-reservation-button-modal" type="button">Save
+                </button>
+                <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="container">-->
+<!--    <br/>-->
+<!--    <button class="btn btn-primary" data-bs-target="#add-edit-movie"-->
+<!--            data-bs-toggle="modal" id="add-movie-button" type="button">Add country-->
+<!--    </button>-->
+<!--    <br/>-->
+<!--    <table id="movies-table" class="table table-bordered table-hover">-->
+<!--        <thead> &lt;!&ndash; table row,this is the header &ndash;&gt;-->
+<!--        <td>Name of movie</td>-->
+<!--        <td>Name of cinema</td>-->
+<!--        <td>Number of tickets</td>-->
+<!--        <td>Price</td>-->
+<!--        </thead>-->
+<!--        &lt;!&ndash;        for each pt fiecare tara din lista, si ii afisez informatiile&ndash;&gt;-->
+<!--        <tr data-th-each="movie:${movies}">-->
+<!--            <td data-th-text="${movie.name}"></td>-->
+<!--            <td data-th-text="${cinema.name}"></td>-->
+<!--            <td data-th-text="${nomber.tickets}"></td>-->
+<!--            <td data-th-text="${ticket.price}"></td>-->
+<!--            &lt;!&ndash;            elementul care te redirecteaza spre pagina de orase specifice &ndash;&gt;-->
+<!--            <td data-th-id="${country.countryId}">-->
+<!--                &lt;!&ndash;                link care ne duce la /cities-app/6 sau orice alt id de tara&ndash;&gt;-->
+<!--                <a data-th-href="'/cities-app/' + ${country.countryId}">-->
+<!--                    <i class="fa fa-building"></i>-->
+<!--                </a>-->
+<!--            </td>-->
+<!--            &lt;!&ndash;            elementul care contine iconitele pt delete si edit&ndash;&gt;-->
+<!--            <td data-th-id="${country.countryId}">-->
+<!--                <i class="fa fa-trash delete-icon"></i>-->
+<!--                <i class="fa fa-pencil-alt edit-icon" data-bs-target="#add-edit-country" data-bs-toggle="modal"></i>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;dialogul modal in care introducem datele. Folosit doar pt add momentan, va fi refolosit pt Update (PUT)&ndash;&gt;-->
+<!--<div class="modal" id="add-edit-country">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            &lt;!&ndash; Modal header &ndash;&gt;-->
+<!--            <div class="modal-header">-->
+<!--                &lt;!&ndash;                textul + butonul de X&ndash;&gt;-->
+<!--                <h4 class="modal-title">Country</h4>-->
+<!--                <button class="btn-close" data-bs-dismiss="modal" type="button"></button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+</html>
