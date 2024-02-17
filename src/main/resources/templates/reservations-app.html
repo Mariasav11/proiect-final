@@ -27,28 +27,18 @@
 
 <div class="container">
     <table id="reservations-table" class="table table-bordered table-hover">
-        <thead> <!-- table row,this is the header -->
+        <thead>
         <td>Number of tickets</td>
         <td>Person name</td>
         <td>Movie</td>
+        <td>Actions</td>
         </thead>
-        <!--        for each pt fiecare oras din lista, si ii afisez informatiile-->
         <tr data-th-each="reservation:${reservations}">
             <td data-th-text="${reservation.noOfTickets}"></td>
             <td data-th-text="${reservation.personName}"></td>
             <td data-th-text="${reservation.movie.name}"></td>
-
-        <!--            elementul care te redirecteaza spre pagina de orase specifice -->
-<!--        <td data-th-id="${reservation.reservationId}">-->
-<!--            &lt;!&ndash;                link care ne duce la /cities-app/6 sau orice alt id de tara&ndash;&gt;-->
-<!--            <a data-th-href="'/movies-app/' + ${reservation.movie.reservationId}">-->
-<!--                <i class="fa fa-building"></i>-->
-<!--            </a>-->
-<!--        </td>-->
-            <!--            elementul care contine iconitele pt delete si edit-->
             <td data-th-id="${reservation.reservationId}">
                 <i class="fa fa-trash delete-icon"></i>
-                <i class="fa fa-pencil-alt edit-icon" data-bs-target="#add-edit-reservation" data-bs-toggle="modal"></i>
             </td>
         </tr>
     </table>

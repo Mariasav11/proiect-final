@@ -30,22 +30,8 @@ public class MovieUIController {
         List<Reservation> allReservations = reservationService.findAllReservationsByMovieId(movieId);
 
         model.addAttribute("reservations", allReservations);
-        // model.addAttribute("movieName", allReservations.get(0).getMovie().getName());
-        //all cities by country
         return "reservations-app";
     }
-
-//  @GetMapping("movies-app/{reservationId}")
-//    String getMovieByReservationId(Model model, @PathVariable(required = false) Integer reservationId) {
-//
-//        Movie movie = reservationService.findMovieByReservationId(reservationId);
-//        List<Reservation> allReservations = reservationService.findAllReservationsByMovieId(movieId);
-//
-//        model.addAttribute("movies", allReservations);
-//        // model.addAttribute("movieName", allReservations.get(0).getMovie().getName());
-//        //all cities by country
-//        return "movies-app";
-//    }
 
     @GetMapping("reservations-app")
     public String getReservations(Model model) {

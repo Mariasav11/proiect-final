@@ -29,6 +29,12 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
-//    public Movie findMovieByReservationId(Integer reservationId) {
-//    }
+    public void deleteReservation(Integer reservationId) {
+        reservationRepository.deleteById(reservationId);
+    }
+
+    public Reservation getReservationById(Integer reservationId) {
+        return reservationRepository.getReferenceById(reservationId);
+    }
+
 }

@@ -38,11 +38,29 @@ public class MovieController {
         return movieService.addMovie(movie);
     }
 
+    @PutMapping("/{movieId}")
+    public Movie updateMovie(@RequestBody Movie movie, @PathVariable Integer movieId) {
+        movie.setMovieId(movieId);
+        return movieService.addMovie(movie);
+    }
 
-    @PostMapping("add-reservation")
-    public Reservation addReservation(@RequestBody Reservation reservation) {
+
+    @PostMapping("/add-reservation/{movieId}")
+    public Reservation addReservation(@RequestBody Reservation reservation, @PathVariable Integer movieId) {
+        Movie movie = movieService.getMovieById(movieId);
+        movie.setNoOfTickets(movie.getNoOfTickets() - reservation.getNoOfTickets());
+        movieService.addMovie(movie);
+        reservation.setMovie(movie);
         return reservationService.addReservation(reservation);
     }
 
-}
+    @DeleteMapping("/remove-reservation/{reservationId}")
+    public void deleteReservation(@PathVariable Integer reservationId) {
+        Reservation currentReservation = reservationService.getReservationById(reservationId);
+        Movie movie = currentReservation.getMovie();
+        movie.setNoOfTickets(currentReservation.getNoOfTickets() + currentReservation.getMovie().getNoOfTickets());
+        movieService.addMovie(movie);
+        reservationService.deleteReservation(reservationId);
+    }
 
+}
